@@ -1,0 +1,31 @@
+{% extends './base.html' %}
+
+{% block content %}
+<div class="card">
+    <div class="card-body">
+    <h1 class="card-title text-center"> Create Todo </h1>
+    <h2 class="bg-danger text-center">{{ error }} </h2>
+    <form class="card-item" method = "post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <button class="btn btn-primary" type="submit"> Save </button>
+    </form>
+     </form>
+    {% if todo.datecompleted == empty %}
+        <form method='POST' action='{% url 'completetodo' todo.id %}'>
+            {% csrf_token %}
+            <button class="btn btn-success" type="submit"> Complete </button>
+        </form>
+    {% else %}
+        <form method='POST' action='{% url 'uncompletetodo' todo.id %}'>
+            {% csrf_token %}
+            <button class="btn btn-warning" type="submit"> Not Completed </button>
+        </form>
+    {% endif %}
+    <form method='POST' action='{% url 'deletetodo' todo.id %}'>
+        {% csrf_token %}
+        <button class="btn btn-danger" type="submit"> Delete </button>
+    </form>
+    </div>
+</div>
+{% endblock %}
